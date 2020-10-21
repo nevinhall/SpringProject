@@ -11,7 +11,7 @@
 
 
   <!-- bean definitions and configurations go here -->
-  <context:component-scan base-package="ie.nevin"/>
+  <context:component-scan base-package="ie.springProject"/>
 
   <jdbc:embedded-database  id="dataSource" type="H2">
     <jdbc:script location="schema.sql"/>
