@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
     public static void main(String[] args){
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        PersonService PersonService = (PersonService) context.getBean("PersonServiceImplementation");
+        PersonService personService = (PersonService) context.getBean("personServiceImplementation");
     }
 
 

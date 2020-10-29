@@ -1,5 +1,5 @@
 CREATE TABLE house (
-    eirCode int(11) NOT NULL PRIMARY KEY,
+    eirCode varChar(30) NOT NULL  PRIMARY KEY,
     address varChar(30) NOT NULL
 );
 
@@ -8,5 +8,6 @@ CREATE TABLE person(
     personName varChar(30) NOT NULL,
     age int(11) NOT NULL,
     occupation varChar(30),
-    eirCode varChar(30) NOT NULL FOREIGN KEY REFERENCES person(eirCode)
+    eirCode varChar(30),
+    foreign key (eirCode) references house(eirCode)
 );
