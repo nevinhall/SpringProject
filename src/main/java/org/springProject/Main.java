@@ -8,6 +8,11 @@ public class Main {
     public static void main(String[] args){
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         PersonService personService = (PersonService) context.getBean("personServiceImplementation");
+
+
+        System.out.println(personService.deleteHero(1));
+        System.out.println(personService.deleteHero(1));
+
     }
 
 

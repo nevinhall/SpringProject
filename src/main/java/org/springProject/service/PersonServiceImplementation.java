@@ -9,4 +9,11 @@ public class PersonServiceImplementation implements PersonService {
 
     @Autowired
     PersonDao personDao;
+
+    @Override
+    public String deleteHero(int personId) {
+        int res = personDao.deletePersonID(personId);
+        return ("An attempt to delete the user with ID of : " + personId + " was executed with a result of: " +  res);
+
+    }
 }
