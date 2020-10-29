@@ -25,4 +25,9 @@ public class PersonDaoImplementation implements PersonDao {
     public int countOAP() {
         return jdbcTemplate.queryForObject(" SELECT COUNT(*) FROM person WHERE person.age > 65;", Integer.class);
     }
+
+    @Override
+    public int countStudents() {
+        return jdbcTemplate.queryForObject(" SELECT COUNT(*) FROM person WHERE person.occupation = 'scholar';", Integer.class);
+    }
 }

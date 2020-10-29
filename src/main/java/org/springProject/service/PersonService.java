@@ -7,4 +7,5 @@ public interface PersonService {
     String deleteHero(int personId);
     String avg_age();
     String countOAP();
+    String countStudents();
 }

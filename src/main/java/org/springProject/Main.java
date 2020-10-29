@@ -15,6 +15,7 @@ public class Main {
 
         System.out.println(personService.avg_age());
         System.out.println(personService.countOAP());
+        System.out.println(personService.countStudents());
 
 
     }

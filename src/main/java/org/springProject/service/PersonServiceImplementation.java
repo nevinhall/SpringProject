@@ -28,5 +28,11 @@ public class PersonServiceImplementation implements PersonService {
         return("The number of Old Age Pensioners currently stored in the database is " + res);
     }
 
+    @Override
+    public String countStudents() {
+        int res = personDao.countStudents();
+        return ("The number of Students currently stored in the database is " + res);
+    }
+
 
 }
