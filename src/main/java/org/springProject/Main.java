@@ -13,6 +13,10 @@ public class Main {
         System.out.println(personService.deleteHero(1));
         System.out.println(personService.deleteHero(1));
 
+        System.out.println(personService.avg_age());
+        System.out.println(personService.countOAP());
+
+
     }
 
 
