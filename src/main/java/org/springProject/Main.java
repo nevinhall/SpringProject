@@ -17,6 +17,10 @@ public class Main {
         System.out.println(personService.countOAP());
         System.out.println(personService.countStudents());
 
+        System.out.println(personService.searchHousehold("000"));
+
+
+
 
     }
 

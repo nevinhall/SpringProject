@@ -1,13 +1,34 @@
 package org.springProject.dao;
 
+import org.springProject.classes.House;
+import org.springProject.classes.Person;
+import org.springProject.dao.rowmappers.HouseRowMapper;
+import org.springProject.dao.rowmappers.PersonRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class PersonDaoImplementation implements PersonDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Override
+    public List<Person> searchHousehold(String eirCode) {
+        return jdbcTemplate.query("SELECT * FROM person WHERE person.eircode = ? ",new Object[]{eirCode} ,new PersonRowMapper());
+    }
+
+    @Override
+    public House searchHouse(String eirCode) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM house WHERE house.eirCode = ?", new Object[]{eirCode}, new HouseRowMapper());
+        }catch (Exception e){
+            return null;
+        }
+
+    }
 
     @Override
     public int deletePersonID(int personId) {
