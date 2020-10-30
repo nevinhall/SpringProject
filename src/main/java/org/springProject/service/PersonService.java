@@ -12,4 +12,5 @@ public interface PersonService {
     String countOAP();
     String countStudents();
     String searchHousehold(String eirCode);
+    String moveHouse(int personId, String newEirCode);
 }

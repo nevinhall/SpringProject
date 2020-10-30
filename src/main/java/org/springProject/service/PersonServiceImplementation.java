@@ -37,19 +37,48 @@ public class PersonServiceImplementation implements PersonService {
         int res = personDao.countStudents();
         return ("The number of Students currently stored in the database is " + res);
     }
+
     public String searchHousehold(String eirCode) {
 
-        House occupantsHouse = (House) personDao.searchHouse(eirCode);
-        if(occupantsHouse  == null){
+        House occupantsHouse = personDao.searchHouse(eirCode);
+        if (occupantsHouse == null) {
             return "The House you are Searching for doesn't exist, therefore there is no occupants \n";
         }
         List<Person> res = personDao.searchHousehold(eirCode);
-        String occupants = "Occupants for House " + occupantsHouse.address + " with an eircode of " + occupantsHouse.eirCode ;
+        String occupants = "Occupants for House " + occupantsHouse.address + " with an eircode of " + occupantsHouse.eirCode;
         for (int i = 0; i < res.size(); i++) {
             occupants = (occupants + " \nOccupant Number:" + (i + 1) + " " + res.get(i).personId + " " + res.get(i).personName + " " + res.get(i).age + "years old " + res.get(i).occupation + " " + res.get(i).eirCode + "\n");
         }
 
         return occupants;
+    }
+
+    @Override
+    public String moveHouse(int personId, String newEirCode) {
+        Person personExists = personDao.findPerson(personId);
+        House houseExists = personDao.searchHouse(newEirCode);
+
+        if (personExists == null) {
+            return "The person in which you are attempting to move into the house with an eircode off " + newEirCode + " does not exist, " +
+                    "therefore the requested operation can not be carried out\n";
+        } else if (houseExists == null) {
+            return "The House you are Searching for doesn't exist, therefore we can not move " + personExists.personName + " in\n";
+        }else{
+            int res = personDao.updateEirCode(personId,newEirCode);
+            if(res == 1){
+                House oldHouse = personDao.searchHouse(personExists.eirCode);
+                return "The address for " + personExists.personName + " has successfully been changed from " + oldHouse.address + " to " +  houseExists.address;
+            }else{
+                return "The update failed, please try again";
+            }
+
+        }
+
+
+
+
+
+
     }
 
 

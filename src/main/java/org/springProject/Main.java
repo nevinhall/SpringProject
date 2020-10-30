@@ -19,6 +19,10 @@ public class Main {
 
         System.out.println(personService.searchHousehold("000"));
 
+        System.out.println(personService.moveHouse(4, "p8k0"));
+
+
+
 
 
 

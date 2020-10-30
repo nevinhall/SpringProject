@@ -31,6 +31,15 @@ public class PersonDaoImplementation implements PersonDao {
     }
 
     @Override
+    public Person findPerson(int personId) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM person WHERE person.personId = ?", new Object[]{personId}, new PersonRowMapper());
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
     public int deletePersonID(int personId) {
         final String SQL = "DELETE FROM person WHERE person.personId = ?";
         return jdbcTemplate.update(SQL, new Object[]{personId});
@@ -50,5 +59,12 @@ public class PersonDaoImplementation implements PersonDao {
     @Override
     public int countStudents() {
         return jdbcTemplate.queryForObject(" SELECT COUNT(*) FROM person WHERE person.occupation = 'scholar';", Integer.class);
+    }
+
+    @Override
+    public int updateEirCode(int personId ,String eirCode) {
+        final String SQL = "UPDATE person set person.eirCode = ? WHERE person.personId = ?";
+        int res = jdbcTemplate.update(SQL, new Object[]{eirCode, personId});
+        return res;
     }
 }
