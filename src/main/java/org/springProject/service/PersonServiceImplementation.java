@@ -81,6 +81,18 @@ public class PersonServiceImplementation implements PersonService {
 
     }
 
+    @Override
+    public String addNewPersonToHouse( String personName, int age, String occupation, String eirCode) {
+        House houseExists = personDao.searchHouse(eirCode);
+        if( houseExists == null){
+            return "The House with an eircode of " + eirCode + " which does not exists, therefor the opperation has been aborted";
+
+        }else {
+            personDao.addNewPerson(personName, age, occupation,  eirCode);
+            return  personName + " has been added. they live in house " + houseExists.address ;
+        }
+    }
+
 
 }
 

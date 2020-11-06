@@ -52,7 +52,6 @@ public class Main {
                 case "3":
 
                     System.out.println("You Have Entered to view the number of Old Age Pensioners in DB");
-                    System.out.println(personService.countOAP());
                     runDefaults = 0;
 
                     break;
@@ -84,6 +83,8 @@ public class Main {
                     break;
                 case "8":
                     System.out.println("You Have Entered to Add a new person and assign that person to a household ");
+                    System.out.println( personService.addNewPersonToHouse("testName", 99, "scholar", "0000"));
+
                     runDefaults = 0;
 
                     break;

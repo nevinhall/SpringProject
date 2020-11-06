@@ -16,4 +16,5 @@ public interface PersonDao {
     int countOAP();
     int countStudents();
     int updateEirCode(int personId ,String eirCode);
+    int addNewPerson(String personName,int age,String occupation,String eirCode);
 }
