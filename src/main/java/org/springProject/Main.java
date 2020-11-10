@@ -28,7 +28,6 @@ public class Main {
             System.out.println("4. Number of Students in DB");
             System.out.println("5. Search Household and list given Occupants");
             System.out.println("6. Move person From one Household to another");
-            System.out.println("6. Move person From one Household to another");
             System.out.println("7. Add a household, along with its occupant(s)");
             System.out.println("8. Add a new person and assign that person to a household");
 
@@ -41,7 +40,11 @@ public class Main {
                 case "1":
 
                     System.out.println("You Have Entered to Delete a Person");
-                    System.out.println(personService.deleteHero(1));
+
+                    System.out.println("Enter ID of Person to delete");
+                    int personID = Integer.parseInt(sc.nextLine());
+
+                    System.out.println(personService.deleteHero(personID));
                     runDefaults = 0;
 
                     break;
@@ -68,14 +71,24 @@ public class Main {
                 case "5":
 
                     System.out.println("You Have Entered to Search a Household and list given Occupants");
-                    System.out.println(personService.searchHousehold("000"));
+
+                    System.out.println("Enter Eircode of House you wish to see the occupants for");
+                    String eirCode = sc.nextLine();
+
+                    System.out.println(personService.searchHousehold(eirCode));
                     runDefaults = 0;
 
                     break;
                 case "6":
 
                     System.out.println("You Have Entered to Move a person From one Household to another");
-                    System.out.println(personService.moveHouse(4, "p8k0"));
+                    System.out.println("Enter New EirCode");
+                     eirCode = sc.nextLine();
+
+                    System.out.println("Enter PersonID");
+                    personID = Integer.parseInt(sc.nextLine());
+
+                    System.out.println(personService.moveHouse(personID, eirCode));
                     runDefaults = 0;
 
                     break;
@@ -86,7 +99,7 @@ public class Main {
                     String address = sc.nextLine();
 
                     System.out.println("Enter House EirCode");
-                    String eirCode = sc.nextLine();
+                    eirCode = sc.nextLine();
 
 
                     System.out.println("How Many occupants are moving into this house?");
