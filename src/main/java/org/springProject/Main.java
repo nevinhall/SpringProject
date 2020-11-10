@@ -1,9 +1,12 @@
 package org.springProject;
 
+
+import org.springProject.classes.Person;
 import org.springProject.service.PersonService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -78,12 +81,55 @@ public class Main {
                     break;
                 case "7":
                     System.out.println("You Have Entered to Add a household, along with its occupant(s)");
+
+                    System.out.println("Enter House Address");
+                    String address = sc.nextLine();
+
+                    System.out.println("Enter House EirCode");
+                    String eirCode = sc.nextLine();
+
+
+                    System.out.println("How Many occupants are moving into this house?");
+                    int numOccupants = Integer.parseInt(sc.nextLine());
+
+                    ArrayList<Person> people = new ArrayList<Person>();
+
+                    int i = 0;
+
+                    String personName;
+                    int perosnAge;
+                    String peronOccupation;
+
+                    while (i < numOccupants) {
+                        System.out.println("Enter Person Name:");
+                        personName = sc.nextLine();
+
+                        System.out.println("Enter Person Age:");
+                        perosnAge = Integer.parseInt(sc.nextLine());
+
+                        System.out.println("Enter Person Occupation:");
+                        peronOccupation = sc.nextLine();
+
+                        Person p = new Person();
+                        p.setPersonName(personName);
+                        p.setOccupation(peronOccupation);
+                        p.setEirCode(eirCode);
+                        p.setAge(perosnAge);
+
+                        people.add(p);
+
+
+                        i++;
+                    }
+                    System.out.println(personService.addNewHouseWPeople(eirCode, address, people));
+
+
                     runDefaults = 0;
 
                     break;
                 case "8":
                     System.out.println("You Have Entered to Add a new person and assign that person to a household ");
-                    System.out.println( personService.addNewPersonToHouse("testName", 99, "scholar", "0000"));
+                    System.out.println(personService.addNewPersonToHouse("testName", 99, "scholar", "0000"));
 
                     runDefaults = 0;
 

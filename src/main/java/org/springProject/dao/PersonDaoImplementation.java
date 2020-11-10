@@ -23,14 +23,14 @@ public class PersonDaoImplementation implements PersonDao {
 
     @Override
     public List<Person> searchHousehold(String eirCode) {
-        return jdbcTemplate.query("SELECT * FROM person WHERE person.eircode = ? ",new Object[]{eirCode} ,new PersonRowMapper());
+        return jdbcTemplate.query("SELECT * FROM person WHERE person.eircode = ? ", new Object[]{eirCode}, new PersonRowMapper());
     }
 
     @Override
     public House searchHouse(String eirCode) {
         try {
             return jdbcTemplate.queryForObject("SELECT * FROM house WHERE house.eirCode = ?", new Object[]{eirCode}, new HouseRowMapper());
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
 
@@ -40,7 +40,7 @@ public class PersonDaoImplementation implements PersonDao {
     public Person findPerson(int personId) {
         try {
             return jdbcTemplate.queryForObject("SELECT * FROM person WHERE person.personId = ?", new Object[]{personId}, new PersonRowMapper());
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -68,7 +68,7 @@ public class PersonDaoImplementation implements PersonDao {
     }
 
     @Override
-    public int updateEirCode(int personId ,String eirCode) {
+    public int updateEirCode(int personId, String eirCode) {
         final String SQL = "UPDATE person set person.eirCode = ? WHERE person.personId = ?";
         int res = jdbcTemplate.update(SQL, new Object[]{eirCode, personId});
         return res;
@@ -82,11 +82,10 @@ public class PersonDaoImplementation implements PersonDao {
         jdbcTemplate.update(
                 new PreparedStatementCreator() {
 
-                    public PreparedStatement createPreparedStatement(Connection connection) throws SQLException
-                    {
-                        PreparedStatement ps = connection.prepareStatement(INSERT_SQL, new String[] {"personId"});
+                    public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                        PreparedStatement ps = connection.prepareStatement(INSERT_SQL, new String[]{"personId"});
                         ps.setString(1, personName);
-                        ps.setInt(2,age);
+                        ps.setInt(2, age);
                         ps.setString(3, occupation);
                         ps.setString(4, eirCode);
                         return ps;
@@ -95,4 +94,22 @@ public class PersonDaoImplementation implements PersonDao {
 
         return KeyHolder.getKey().intValue();
     }
+
+    @Override
+    public int addHouse(String eirCode, String address) {
+        final String INSERT_SQL = "INSERT INTO house(eirCode,address) VALUES (?,?)";
+
+        int res = jdbcTemplate.update(
+                new PreparedStatementCreator() {
+
+                    public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                        PreparedStatement ps = connection.prepareStatement(INSERT_SQL, new String[]{"eirCode"});
+                        ps.setString(1, eirCode);
+                        ps.setString(2, address);
+                        return ps;
+                    }
+                });
+        return res;
+    }
+
 }
