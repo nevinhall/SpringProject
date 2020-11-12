@@ -21,20 +21,6 @@ public class PersonDaoImplementation implements PersonDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @Override
-    public List<Person> searchHousehold(String eirCode) {
-        return jdbcTemplate.query("SELECT * FROM person WHERE person.eircode = ? ", new Object[]{eirCode}, new PersonRowMapper());
-    }
-
-    @Override
-    public House searchHouse(String eirCode) {
-        try {
-            return jdbcTemplate.queryForObject("SELECT * FROM house WHERE house.eirCode = ?", new Object[]{eirCode}, new HouseRowMapper());
-        } catch (Exception e) {
-            return null;
-        }
-
-    }
 
     @Override
     public Person findPerson(int personId) {
@@ -67,12 +53,7 @@ public class PersonDaoImplementation implements PersonDao {
         return jdbcTemplate.queryForObject(" SELECT COUNT(*) FROM person WHERE person.occupation = 'scholar';", Integer.class);
     }
 
-    @Override
-    public int updateEirCode(int personId, String eirCode) {
-        final String SQL = "UPDATE person set person.eirCode = ? WHERE person.personId = ?";
-        int res = jdbcTemplate.update(SQL, new Object[]{eirCode, personId});
-        return res;
-    }
+
 
     @Override
     public int addNewPerson(String personName, int age, String occupation, String eirCode) {
@@ -95,21 +76,6 @@ public class PersonDaoImplementation implements PersonDao {
         return KeyHolder.getKey().intValue();
     }
 
-    @Override
-    public int addHouse(String eirCode, String address) {
-        final String INSERT_SQL = "INSERT INTO house(eirCode,address) VALUES (?,?)";
 
-        int res = jdbcTemplate.update(
-                new PreparedStatementCreator() {
-
-                    public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                        PreparedStatement ps = connection.prepareStatement(INSERT_SQL, new String[]{"eirCode"});
-                        ps.setString(1, eirCode);
-                        ps.setString(2, address);
-                        return ps;
-                    }
-                });
-        return res;
-    }
 
 }

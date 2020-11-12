@@ -2,6 +2,7 @@ package org.springProject.service;
 
 import org.springProject.classes.House;
 import org.springProject.classes.Person;
+import org.springProject.dao.HouseDao;
 import org.springProject.dao.PersonDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,11 @@ public class PersonServiceImplementation implements PersonService {
 
     @Autowired
     PersonDao personDao;
+    @Autowired
+    HouseDao houseDao;
 
     @Override
-    public String deleteHero(int personId) {
+    public String deletePerson(int personId) {
         int res = personDao.deletePersonID(personId);
         return ("An attempt to delete the user with ID of : " + personId + " was executed with a result of: " + res);
     }
@@ -41,11 +44,11 @@ public class PersonServiceImplementation implements PersonService {
 
     public String searchHousehold(String eirCode) {
 
-        House occupantsHouse = personDao.searchHouse(eirCode);
+        House occupantsHouse = houseDao.searchHouse(eirCode);
         if (occupantsHouse == null) {
             return "The House you are Searching for doesn't exist, therefore there is no occupants \n";
         }
-        List<Person> res = personDao.searchHousehold(eirCode);
+        List<Person> res = houseDao.searchHousehold(eirCode);
         String occupants = "Occupants for House " + occupantsHouse.address + " with an eircode of " + occupantsHouse.eirCode;
         for (int i = 0; i < res.size(); i++) {
             occupants = (occupants + " \nOccupant Number:" + (i + 1) + " " + res.get(i).personId + " " + res.get(i).personName + " " + res.get(i).age + "years old " + res.get(i).occupation + " " + res.get(i).eirCode + "\n");
@@ -57,7 +60,7 @@ public class PersonServiceImplementation implements PersonService {
     @Override
     public String moveHouse(int personId, String newEirCode) {
         Person personExists = personDao.findPerson(personId);
-        House houseExists = personDao.searchHouse(newEirCode);
+        House houseExists = houseDao.searchHouse(newEirCode);
 
         if (personExists == null) {
             return "The person in which you are attempting to move into the house with an eircode off " + newEirCode + " does not exist, " +
@@ -65,9 +68,9 @@ public class PersonServiceImplementation implements PersonService {
         } else if (houseExists == null) {
             return "The House you are Searching for doesn't exist, therefore we can not move " + personExists.personName + " in\n";
         } else {
-            int res = personDao.updateEirCode(personId, newEirCode);
+            int res = houseDao.updateEirCode(personId, newEirCode);
             if (res == 1) {
-                House oldHouse = personDao.searchHouse(personExists.eirCode);
+                House oldHouse = houseDao.searchHouse(personExists.eirCode);
                 return "The address for " + personExists.personName + " has successfully been changed from " + oldHouse.address + " to " + houseExists.address;
             } else {
                 return "The update failed, please try again";
@@ -79,7 +82,7 @@ public class PersonServiceImplementation implements PersonService {
 
     @Override
     public String addNewPersonToHouse(String personName, int age, String occupation, String eirCode) {
-        House houseExists = personDao.searchHouse(eirCode);
+        House houseExists = houseDao.searchHouse(eirCode);
         if (houseExists == null) {
             return "The House with an eircode of " + eirCode + " which does not exists, therefor the opperation has been aborted";
 
@@ -91,16 +94,16 @@ public class PersonServiceImplementation implements PersonService {
 
     @Override
     public String addNewHouseWPeople(String eirCode, String address, ArrayList<Person> people) {
-        House houseExists = personDao.searchHouse(eirCode);
+        House houseExists = houseDao.searchHouse(eirCode);
         if (houseExists != null) {
             return "You can not add this house, the eircode of " + eirCode + "is all ready present in the database";
         }
 
-        int res = personDao.addHouse(eirCode, address);
+        int res = houseDao.addHouse(eirCode, address);
         if (res == 1) {
 
             for (Person person : people) {
-                int i = 0;
+
                 int populateHouse = personDao.addNewPerson(person.personName, person.age, person.occupation, eirCode);
                 if (populateHouse == 0) {
                     return "unable to populate house, the house has been added to the database";
@@ -116,9 +119,28 @@ public class PersonServiceImplementation implements PersonService {
         return "unable to create house, the opertation has therefore been aborted.";
     }
 
+    @Override
+    public String removeHouseWOccupants(String eirCode) {
 
+        List<Person> occupants = houseDao.searchHousehold(eirCode);
+
+        for (Person re : occupants) {
+            deletePerson(re.getPersonId());
+
+        }
+
+        int res = houseDao.deleteHouse(eirCode);
+
+        if (res == 1) {
+
+
+            return "The house with its occupants has been deleted";
+
+        }
+        return "Failed to find house, operation aborted ";
+
+    }
 }
-
 
 
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface PersonService {
-    String deleteHero(int personId);
+    String deletePerson(int personId);
     String avg_age();
     String countOAP();
     String countStudents();
@@ -16,4 +16,5 @@ public interface PersonService {
     String moveHouse(int personId, String newEirCode);
     String addNewPersonToHouse(String personName,int age,String occupation,String eirCode);
     String addNewHouseWPeople(String eirCode, String address, ArrayList<Person> people);
+    String removeHouseWOccupants(String eirCode);
 }

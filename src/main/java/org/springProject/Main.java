@@ -2,6 +2,8 @@ package org.springProject;
 
 
 import org.springProject.classes.Person;
+import org.springProject.dao.HouseDao;
+import org.springProject.dao.HouseDaoImplementation;
 import org.springProject.service.PersonService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -13,6 +15,7 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         PersonService personService = (PersonService) context.getBean("personServiceImplementation");
+
 
         Boolean runApp = true;
         int runDefaults = 1;
@@ -30,6 +33,7 @@ public class Main {
             System.out.println("6. Move person From one Household to another");
             System.out.println("7. Add a household, along with its occupant(s)");
             System.out.println("8. Add a new person and assign that person to a household");
+            System.out.println("9. Delete a House with its occupants");
 
 
             Scanner sc = new Scanner(System.in);
@@ -44,7 +48,7 @@ public class Main {
                     System.out.println("Enter ID of Person to delete");
                     int personID = Integer.parseInt(sc.nextLine());
 
-                    System.out.println(personService.deleteHero(personID));
+                    System.out.println(personService.deletePerson(personID));
                     runDefaults = 0;
 
                     break;
@@ -147,6 +151,20 @@ public class Main {
                     runDefaults = 0;
 
                     break;
+                case "9":
+                    System.out.println("You Have Entered to Delete a House with its occupants ");
+                    System.out.println("Enter eirCode of the house");
+                    eirCode = sc.nextLine();
+
+
+                    System.out.println(personService.removeHouseWOccupants(eirCode));
+
+
+
+
+                    runDefaults = 0;
+
+                    break;
             }
 
 
@@ -161,11 +179,11 @@ public class Main {
         }
 
 
-        System.out.println(personService.deleteHero(1));
+        System.out.println(personService.deletePerson(1));
 
 
-        System.out.println(personService.deleteHero(1));
-        System.out.println(personService.deleteHero(1));
+        System.out.println(personService.deletePerson(1));
+        System.out.println(personService.deletePerson(1));
 
         System.out.println(personService.avg_age());
         System.out.println(personService.countOAP());
