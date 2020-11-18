@@ -2,9 +2,7 @@ package org.springProject;
 
 
 import org.springProject.classes.Person;
-import org.springProject.dao.HouseDao;
-import org.springProject.dao.HouseDaoImplementation;
-import org.springProject.service.PersonService;
+import org.springProject.service.ApplicationService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,7 +12,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        PersonService personService = (PersonService) context.getBean("personServiceImplementation");
+        ApplicationService applicationService = (ApplicationService) context.getBean("applicationServiceImplementation");
 
 
         Boolean runApp = true;
@@ -48,27 +46,28 @@ public class Main {
                     System.out.println("Enter ID of Person to delete");
                     int personID = Integer.parseInt(sc.nextLine());
 
-                    System.out.println(personService.deletePerson(personID));
+                    System.out.println(applicationService.deletePerson(personID));
                     runDefaults = 0;
 
                     break;
                 case "2":
 
                     System.out.println("You Have Entered to View The Average Age of House Occupants");
-                    System.out.println(personService.avg_age());
+                    System.out.println(applicationService.avg_age());
                     runDefaults = 0;
 
                     break;
                 case "3":
 
                     System.out.println("You Have Entered to view the number of Old Age Pensioners in DB");
+                    System.out.println(applicationService.countOAP());
                     runDefaults = 0;
 
                     break;
                 case "4":
 
                     System.out.println("You Have Entered to view the Number of Students in DB");
-                    System.out.println(personService.countStudents());
+                    System.out.println(applicationService.countStudents());
                     runDefaults = 0;
 
                     break;
@@ -79,7 +78,7 @@ public class Main {
                     System.out.println("Enter Eircode of House you wish to see the occupants for");
                     String eirCode = sc.nextLine();
 
-                    System.out.println(personService.searchHousehold(eirCode));
+                    System.out.println(applicationService.searchHousehold(eirCode));
                     runDefaults = 0;
 
                     break;
@@ -87,12 +86,12 @@ public class Main {
 
                     System.out.println("You Have Entered to Move a person From one Household to another");
                     System.out.println("Enter New EirCode");
-                     eirCode = sc.nextLine();
+                    eirCode = sc.nextLine();
 
                     System.out.println("Enter PersonID");
                     personID = Integer.parseInt(sc.nextLine());
 
-                    System.out.println(personService.moveHouse(personID, eirCode));
+                    System.out.println(applicationService.moveHouse(personID, eirCode));
                     runDefaults = 0;
 
                     break;
@@ -138,7 +137,7 @@ public class Main {
 
                         i++;
                     }
-                    System.out.println(personService.addNewHouseWPeople(eirCode, address, people));
+                    System.out.println(applicationService.addNewHouseWPeople(eirCode, address, people));
 
 
                     runDefaults = 0;
@@ -146,7 +145,21 @@ public class Main {
                     break;
                 case "8":
                     System.out.println("You Have Entered to Add a new person and assign that person to a household ");
-                    System.out.println(personService.addNewPersonToHouse("testName", 99, "scholar", "0000"));
+                    System.out.println("Enter Person Name:");
+                    personName = sc.nextLine();
+
+                    System.out.println("Enter Person Age:");
+                    perosnAge = Integer.parseInt(sc.nextLine());
+
+                    System.out.println("Enter Person Occupation:");
+                    peronOccupation = sc.nextLine();
+
+                    System.out.println("Enter House EirCode");
+                    eirCode = sc.nextLine();
+
+
+
+                    System.out.println(applicationService.addNewPersonToHouse(   personName, perosnAge, peronOccupation , eirCode));
 
                     runDefaults = 0;
 
@@ -157,9 +170,7 @@ public class Main {
                     eirCode = sc.nextLine();
 
 
-                    System.out.println(personService.removeHouseWOccupants(eirCode));
-
-
+                    System.out.println(applicationService.removeHouseWOccupants(eirCode));
 
 
                     runDefaults = 0;
@@ -179,21 +190,21 @@ public class Main {
         }
 
 
-        System.out.println(personService.deletePerson(1));
+        System.out.println(applicationService.deletePerson(1));
 
 
-        System.out.println(personService.deletePerson(1));
-        System.out.println(personService.deletePerson(1));
+        System.out.println(applicationService.deletePerson(1));
+        System.out.println(applicationService.deletePerson(1));
 
-        System.out.println(personService.avg_age());
-        System.out.println(personService.countOAP());
-        System.out.println(personService.countStudents());
+        System.out.println(applicationService.avg_age());
+        System.out.println(applicationService.countOAP());
+        System.out.println(applicationService.countStudents());
 
-        System.out.println(personService.searchHousehold("000"));
+        System.out.println(applicationService.searchHousehold("000"));
 
-        System.out.println(personService.searchHousehold("0000"));
+        System.out.println(applicationService.searchHousehold("0000"));
 
-        System.out.println(personService.moveHouse(4, "p8k0"));
+        System.out.println(applicationService.moveHouse(4, "p8k0"));
 
 
     }

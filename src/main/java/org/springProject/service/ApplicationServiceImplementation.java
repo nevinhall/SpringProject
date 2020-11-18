@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PersonServiceImplementation implements PersonService {
+public class ApplicationServiceImplementation implements ApplicationService {
 
     @Autowired
     PersonDao personDao;

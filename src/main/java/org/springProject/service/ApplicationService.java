@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public interface PersonService {
+public interface ApplicationService {
     String deletePerson(int personId);
     String avg_age();
     String countOAP();
